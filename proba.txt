@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from "react";
+Implement in my code functionality to delete all messages only when all user in chat log out. This is my code: import { createContext, useState, useContext, useEffect } from "react";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -24,7 +24,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userCount, setUserCount] = useState(0);
 
   //signin in with google
   const signinWithGoogle = () => {
@@ -34,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   //signout
   const logout = async () => {
-    setUserCount((count) => count - 1);
+    await deleteAllMessages();
     await signOut(auth);
   };
 
@@ -50,19 +49,10 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
-      if (user) {
-        setUserCount((count) => count + 1);
-      }
     });
 
-    return () => {
-      unsubscribe();
-      // Check if all users have logged out
-      if (userCount === 1) {
-        deleteAllMessages();
-      }
-    };
-  }, [userCount]);
+    return unsubscribe;
+  }, []);
 
   return (
     <AuthContext.Provider value={value}>
