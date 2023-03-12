@@ -26,8 +26,8 @@ const Login = () => {
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">Dobrodošli </h1>
           <p className="py-6">
-            Pristupite Turk's Chat razgovorima, upoznajte nove ljude, družite
-            se, možda su isto u 🍌 kao i vi!
+            Pristupite Turk's Chat instant razgovorima, upoznajte nove ljude,
+            družite se, možda su isto 💫 kao i vi!
           </p>
           <button onClick={handleLogin} className="btn btn-outline btn-primary">
             Logiraj se s Google
